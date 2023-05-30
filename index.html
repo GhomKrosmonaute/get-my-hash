@@ -186,11 +186,15 @@
         clearTimeout(hideTimeout);
 
         // hide all personal inputs
-        document.getElementById("hash").innerText = "?";
-        document.getElementById("feedback").innerText = "Copied to clipboard.";
+        document.getElementById("hash").innerText = "*".repeat(
+          Number(document.getElementById("length").value)
+        );
         document.getElementById("website").value = "";
         document.getElementById("user").value = "";
         document.getElementById("secret").value = "";
+
+        // update feedback
+        document.getElementById("feedback").innerText = "Copied to clipboard.";
       }
     </script>
   </body>
