@@ -34,7 +34,8 @@
         font-size: 5em;
       }
 
-      input {
+      input,
+      select {
         padding: 10px;
         margin-bottom: 10px;
         width: 100%;
@@ -81,22 +82,68 @@
   <body>
     <div id="box">
       <h1>GET MY HASH</h1>
-      <form>
+      <form
+        onsubmit="generate()"
+        onfocus="clearTimeout(hideTimeout)"
+        onchange="clearTimeout(hideTimeout)"
+      >
         <label>
           website / domain / url / location / label / address <br />
-          <input type="text" name="website" id="website" />
+          <input
+            type="text"
+            name="website"
+            id="website"
+            onfocus="clearTimeout(hideTimeout)"
+            onchange="clearTimeout(hideTimeout)"
+          />
         </label>
         <label>
           username / user / email / login / account <br />
-          <input type="text" name="user" id="user" />
+          <input
+            type="text"
+            name="user"
+            id="user"
+            onfocus="clearTimeout(hideTimeout)"
+            onchange="clearTimeout(hideTimeout)"
+          />
         </label>
         <label>
           secret / password / passphrase / code <br />
-          <input type="password" name="secret" id="secret" />
+          <input
+            type="password"
+            name="secret"
+            id="secret"
+            onfocus="clearTimeout(hideTimeout)"
+            onchange="clearTimeout(hideTimeout)"
+          />
+        </label>
+        <label>
+          hash type <br />
+          <select
+            name="hashType"
+            id="hashType"
+            onfocus="clearTimeout(hideTimeout)"
+            onchange="clearTimeout(hideTimeout)"
+          >
+            <option value="website + user + secret">alpha</option>
+            <option value="user + website + secret">bravo</option>
+            <option value="secret + website + user">charly</option>
+            <option value="secret + user + website">delta</option>
+            <option value="user + secret + website">echo</option>
+            <option value="website + secret + user">foxtrot</option>
+          </select>
         </label>
         <label>
           length <br />
-          <input type="number" name="length" id="length" value="64" max="64" />
+          <input
+            type="number"
+            name="length"
+            id="length"
+            value="64"
+            max="64"
+            onfocus="clearTimeout(hideTimeout)"
+            onchange="clearTimeout(hideTimeout)"
+          />
         </label>
         <label>
           hash count <br />
@@ -106,6 +153,8 @@
             id="passCount"
             value="3"
             min="1"
+            onfocus="clearTimeout(hideTimeout)"
+            onchange="clearTimeout(hideTimeout)"
           />
         </label>
       </form>
@@ -135,9 +184,12 @@
         const secret = document.getElementById("secret").value;
         const length = Number(document.getElementById("length").value);
         const passCount = Number(document.getElementById("passCount").value);
+        const hashType = document.getElementById("hashType").value;
 
-        // hash once
-        let hash = await sha256(website + user + secret);
+        console.log(hashType);
+
+        // hash once with selected hash type
+        let hash = await sha256(eval(hashType));
 
         // hash multiple times
         for (let i = 0; i < passCount - 1; i++) {
@@ -161,6 +213,8 @@
         hideTimeout = setTimeout(() => {
           hideHash();
         }, 5000);
+
+        return false;
       }
 
       /**
