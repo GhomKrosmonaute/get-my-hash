@@ -85,8 +85,8 @@
       <form
         id="form"
         onsubmit="generate(); return false;"
-        onfocus="clearTimeout(hideTimeout)"
-        onchange="clearTimeout(hideTimeout)"
+        onfocus="onEdited()"
+        onchange="onEdited()"
       >
         <label>
           website / domain / url / location / label / address <br />
@@ -94,8 +94,8 @@
             type="text"
             name="website"
             id="website"
-            onfocus="clearTimeout(hideTimeout)"
-            onchange="clearTimeout(hideTimeout)"
+            onfocus="onEdited()"
+            onchange="onEdited()"
             required
           />
         </label>
@@ -105,8 +105,8 @@
             type="text"
             name="user"
             id="user"
-            onfocus="clearTimeout(hideTimeout)"
-            onchange="clearTimeout(hideTimeout)"
+            onfocus="onEdited()"
+            onchange="onEdited()"
             required
           />
         </label>
@@ -116,8 +116,8 @@
             type="password"
             name="secret"
             id="secret"
-            onfocus="clearTimeout(hideTimeout)"
-            onchange="clearTimeout(hideTimeout)"
+            onfocus="onEdited()"
+            onchange="onEdited()"
             required
           />
         </label>
@@ -126,8 +126,8 @@
           <select
             name="hashType"
             id="hashType"
-            onfocus="clearTimeout(hideTimeout)"
-            onchange="clearTimeout(hideTimeout)"
+            onfocus="onEdited()"
+            onchange="onEdited()"
             required
           >
             <option value="website + user + secret">alpha</option>
@@ -146,8 +146,8 @@
             id="length"
             value="64"
             max="64"
-            onfocus="clearTimeout(hideTimeout)"
-            onchange="clearTimeout(hideTimeout)"
+            onfocus="onEdited()"
+            onchange="onEdited()"
             required
           />
         </label>
@@ -159,8 +159,8 @@
             id="passCount"
             value="3"
             min="1"
-            onfocus="clearTimeout(hideTimeout)"
-            onchange="clearTimeout(hideTimeout)"
+            onfocus="onEdited()"
+            onchange="onEdited()"
             required
           />
         </label>
@@ -169,7 +169,7 @@
       <div id="buttons">
         <button
           type="button"
-          onclick="document.getElementById('form').submit()"
+          onclick="document.getElementById('form').requestSubmit()"
         >
           GET MY HASH
         </button>
@@ -260,6 +260,14 @@
 
         // update feedback
         document.getElementById("feedback").innerText = "Copied to clipboard.";
+      }
+
+      function onEdited() {
+        clearTimeout(hideTimeout);
+        if (document.getElementById("hash").innerText !== "?") {
+          document.getElementById("feedback").innerText =
+            "Copied to clipboard.";
+        }
       }
     </script>
   </body>
